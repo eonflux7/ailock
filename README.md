@@ -18,25 +18,40 @@ explains each one. The result opens in your browser, ready to read while the mat
 
 ## Quick start
 
-You need [uv](https://docs.astral.sh/uv/) and a coding agent such as
-[Claude Code](https://claude.com/claude-code), [Codex](https://developers.openai.com/codex) or
-[OpenCode](https://opencode.ai). No Steam login or match history is required.
+All you need is a coding agent. No Steam login or match history is required.
 
-```sh
-git clone https://github.com/eonflux7/ailock.git
-cd ailock
-uv sync
-uv run ailock knowledge    # one-time game data download, under a minute; rerun after a patch
-```
+1. Use the agent you already have, such as [Claude Code](https://claude.com/claude-code) or
+   [Codex](https://developers.openai.com/codex). If you don't have one,
+   [OpenCode](https://opencode.ai/docs) has free models: install it, start it, and run `/models` to pick one.
+   GLM-5.3-Flash Free and DeepSeek V4.1 Flash Free are good first picks, because OpenCode lists both as
+   [zero-retention and not used for training](https://opencode.ai/docs/zen). Other free models may keep
+   your prompts or use them to improve the model.
+2. Ask your agent to set everything up:
 
-Start your agent in the `ailock` folder. Once you can see the rosters, send it:
+   ```
+   Clone https://github.com/eonflux7/ailock, install uv if it's missing, then run
+   `uv sync` and `uv run ailock knowledge` in the ailock folder.
+   ```
 
-```
-/live haze; allies abrams seven ivy dynamo geist; enemies mo infernus vindicta paradox bebop wraith; lane dynamo vs bebop wraith
-```
+3. Quit the agent, then start it again inside the `ailock` folder so it finds the skill.
+4. Once you can see the rosters, send it:
+
+   ```
+   /live haze; allies abrams seven ivy dynamo geist; enemies mo infernus vindicta paradox bebop wraith; lane dynamo vs bebop wraith
+   ```
 
 If your agent has no `/live` command, send the same message without the slash. Give as much of the
-roster as you have. Hero names are fuzzy, so `mo`, `geist`, `talon` and `rat` all work.
+roster as you have. Hero names are fuzzy, so `mo`, `geist`, `talon` and `rat` all work. After a game
+patch, run `uv run ailock knowledge` again.
+
+**The model matters.** ailock gathers the same facts for every model, but the build, corrections and
+game plan are the model's own judgment. A stronger model will usually read the matchup better, and a
+smaller one may be slower or miss how abilities and items interact. ailock checks the plan for unknown
+items and slot limits, but it can't tell whether the advice is good, so read the reasoning behind each pick.
+
+Free models are offered for a limited time, have a daily request limit, and change often. If you want
+stronger models, [OpenCode Go](https://opencode.ai/go) starts at $10 a month and includes models such as
+GLM-5.3 and Kimi K3. Add it with `/connect`.
 
 ## What's in the brief
 
