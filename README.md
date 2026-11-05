@@ -11,37 +11,38 @@
 
 Most build guides are written for a hero. ailock's live brief is written for the game you're about to
 play. It pulls current win rates, matchups and popular builds, reads the abilities of all twelve
-heroes from the live game files, and hands those facts to Claude, which makes the calls and explains
-each one. The result opens in your browser, ready to read while the match loads.
+heroes from the live game files, and hands those facts to your coding agent, which makes the calls and
+explains each one. The result opens in your browser, ready to read while the match loads.
 
 ![An example live brief for Haze](docs/brief.png)
 
 ## Quick start
 
-You need [uv](https://docs.astral.sh/uv/) and [Claude Code](https://claude.com/claude-code). No Steam
-login or match history is required.
+You need [uv](https://docs.astral.sh/uv/) and a coding agent such as
+[Claude Code](https://claude.com/claude-code), [Codex](https://developers.openai.com/codex) or
+[OpenCode](https://opencode.ai). No Steam login or match history is required.
 
 ```sh
 git clone https://github.com/eonflux7/ailock.git
 cd ailock
 uv sync
 uv run ailock knowledge    # one-time game data download, under a minute; rerun after a patch
-claude
 ```
 
-Then, once you can see the rosters:
+Start your agent in the `ailock` folder. Once you can see the rosters, send it:
 
 ```
 /live haze; allies abrams seven ivy dynamo geist; enemies mo infernus vindicta paradox bebop wraith; lane dynamo vs bebop wraith
 ```
 
-Give as much of the roster as you have. Hero names are fuzzy, so `mo`, `geist`, `talon` and `rat` all work.
+If your agent has no `/live` command, send the same message without the slash. Give as much of the
+roster as you have. Hero names are fuzzy, so `mo`, `geist`, `talon` and `rat` all work.
 
 ## What's in the brief
 
 - **Build:** the best fit from the 10 most played current builds, and why it fits this roster
 - **Corrections:** items to add or cut, each tied to an enemy or a statistic
-- **Claude's own builds:** one to three, split into early, mid and late, with slots used, souls
+- **The agent's own builds:** one to three, split into early, mid and late, with slots used, souls
   needed and when the average player has them
 - **Situational items and sells:** what to buy on which trigger, and what to sell when you run out of slots
 - **Skill order:** point by point, with any change from the popular order explained
@@ -53,8 +54,8 @@ Give as much of the roster as you have. Hero names are fuzzy, so `mo`, `geist`, 
 
 1. `ailock live` makes about 16 parallel deadlock-api calls (around 10 seconds cold, then cached for
    the day) and reads the newest game build. It opens a page right away with the rosters and popular builds.
-2. Claude reads the facts and writes its decisions to `data/live/plan.json`. The helper gathers
-   data and decides nothing; every decision is Claude's.
+2. The agent reads the facts and writes its decisions to `data/live/plan.json`. The helper gathers
+   data and decides nothing; every decision is the agent's.
 3. `ailock live-page` checks the plan against the game: unknown items, slot limits, what's held at each point.
    The open tab then updates in place through a small local server on `localhost:8765`.
 
@@ -62,7 +63,7 @@ Statistics cover all ranks over the last 30 days. To narrow them, ask for it in 
 pass `--days`, `--min-badge` and `--max-badge` to `ailock live` (badge = tier × 10 + subrank, so 46 is
 Sentinel 6). `AILOCK_LIVE_PORT` changes the port.
 
-### Without Claude
+### Without an agent
 
 `ailock live` works on its own: it prints every fact as text (or JSON with `--json`) and serves the
 page with rosters and popular builds. You make the decisions yourself.
@@ -85,7 +86,7 @@ uv run ailock lane <match_id> <player>                       # lane economy, tra
 uv run ailock sql "select hero_name, count(*), avg(won::int) from player_heroes where account_id = <id> group by 1"
 ```
 
-Ask Claude Code to review a match and it will use these commands. [AGENTS.md](AGENTS.md) has the full
+Ask your agent to review a match and it will use these commands. [AGENTS.md](AGENTS.md) has the full
 schema and review workflow. `uv run ailock --help` lists every command.
 
 Match metadata has per-player item timings, stat snapshots about every 3 minutes with souls by source,
@@ -143,7 +144,7 @@ src/ailock/
   demo.py       local replay ingest
   sources/      deadlock-api client, Steam GC bridge, Valve CDN download
   cli.py
-.claude/skills/live/  the /live skill: how Claude decides
+.agents/skills/live/  the /live skill: how the agent decides
 parser/         Rust replay extractor (positions and state at 1 Hz)
 steam/          Node bridge to Deadlock's game coordinator
 ```
