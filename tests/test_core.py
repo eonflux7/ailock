@@ -86,8 +86,8 @@ def test_live_page_marks_fixes_and_unknown_names():
     assert 'class="item weapon cut"' in out and 'class="item vitality add"' in out
     assert "unknown item 'Made Up Item'" in p.warnings
     assert ">T1<" in out  # second point into an ability is its T1
-    pending = Page(facts, {}).render()  # before the agent's plan: rosters and popular builds, Claude column pending
-    assert "Claude is building your plan" in pending and "candidate builds" in pending
+    pending = Page(facts, {}).render()  # before the agent's plan: rosters and popular builds, agent column pending
+    assert "Agent is building your plan" in pending and "candidate builds" in pending
 
 
 def test_live_page_slots_upgrades_and_sells():

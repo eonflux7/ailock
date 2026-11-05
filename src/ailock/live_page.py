@@ -281,7 +281,7 @@ class Page:
             fix_rows.append(f'<li class="{kind}"><span class="badge">{badge}</span><div>{what}'
                             f'<div class="why">{_e(x.get("why"))}</div></div></li>')
         title = (f'Popular <span class="tagname">{b["tag"]}</span> {_e(b["name"])}' if not pending else
-                 f'Popular builds <span class="muted">· showing {b["tag"]} until Claude picks</span>')
+                 f'Popular builds <span class="muted">· showing {b["tag"]} until the agent picks</span>')
         return (f'<section class="card popular"><h2>{title}</h2>'
                 f'<div class="sub">id <b class="copy" data-copy="{b["hero_build_id"]}"'
                 f'{_tip("click to copy the build id")}>{b["hero_build_id"]}</b> · wr {_pct(b["win_rate"])} over '
@@ -380,7 +380,7 @@ class Page:
         if not bs:
             return PENDING
         if len(bs) == 1:
-            return (f'<section class="card claude"><h2>Claude <span class="muted">·</span> {_e(bs[0].get("name") or "build")}'
+            return (f'<section class="card claude"><h2>Plan <span class="muted">·</span> {_e(bs[0].get("name") or "build")}'
                     f'</h2>{self.claude_build(bs[0], bs[0])}</section>')
         # CSS-only tabs: one radio per build; keys 1-3 switch (see JS)
         radios = "".join(f'<input type="radio" name="cb" id="cb{i}"{" checked" if i == 0 else ""}>'
@@ -388,7 +388,7 @@ class Page:
                          f'{" <span class=main>main</span>" if i == 0 else ""}</label>' for i, b in enumerate(bs))
         panels = "".join(f'<div class="panel p{i}">{self.claude_build(b, bs[0])}</div>' for i, b in enumerate(bs))
         css = "".join(f"#cb{i}:checked~.panels .p{i}{{display:block}}" for i in range(len(bs)))
-        return (f'<section class="card claude"><h2>Claude builds</h2><style>{css}</style>'
+        return (f'<section class="card claude"><h2>Agent builds</h2><style>{css}</style>'
                 f'<div class="tabs">{radios}<div class="panels">{panels}</div></div></section>')
 
     def watch(self) -> str:
@@ -460,7 +460,7 @@ def render(plan_path: Path) -> tuple[Path, list[str]]:
     page, warnings = write(json.loads(plan_path.read_text()))
     problems = [w for w in warnings if not w.startswith("no icon")]
     if problems:
-        set_status("fixing", f"Claude is fixing {len(problems)} issue{'s' * (len(problems) > 1)}", warnings=problems)
+        set_status("fixing", f"Agent is fixing {len(problems)} issue{'s' * (len(problems) > 1)}", warnings=problems)
     else:
         set_status("ready", "Ready")
     return page, warnings
@@ -469,7 +469,7 @@ def render(plan_path: Path) -> tuple[Path, list[str]]:
 STATUS_PILL = ('<div id="status" data-stage="idle"><span class="dot"></span><span class="msg">offline</span>'
                '<span class="el"></span></div>')
 
-PENDING = """<section class="card claude pending"><h2>Claude is building your plan</h2>
+PENDING = """<section class="card claude pending"><h2>Agent is building your plan</h2>
 <ol class="steps"><li data-step="facts">Gathering facts <span class="muted">matchups, builds, item stats</span></li>
 <li data-step="deciding">Reading the room <span class="muted">build pick, corrections, own builds, skill order</span></li>
 <li data-step="ready">Brief ready</li></ol>

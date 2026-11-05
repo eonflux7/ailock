@@ -48,10 +48,10 @@ Python: `from ailock.db import connect; connect().sql("...")`. The catalog is `d
 
 ## Live pre-game brief
 
-`/live` (skill in `.claude/skills/live/`) takes the user's hero and both rosters, runs `ailock live` once, decides
+`/live` (skill in `.agents/skills/live/`, symlinked from `.claude/skills/` for Claude Code) takes the user's hero and both rosters, runs `ailock live` once, decides
 (build B1-B10 from the 10 most played current builds, corrections, 1-3 builds of its own with early/mid/late items, optional items, sells and a
 point-by-point skill order, threats), writes the decisions to `data/live/plan.json` and runs `ailock live-page`,
-which renders `data/live/brief.html` (Claude's builds as tabs, each phase with slots used and souls needed, next
+which renders `data/live/brief.html` (the agent's builds as tabs, each phase with slots used and souls needed, next
 to threats and rosters; the popular build in its author's sections with corrections below; item/ability/hero icons,
 Iosevka). `ailock live` saves its facts to `data/live/last.json`, renders a pending page from them (rosters,
 popular builds) and starts `ailock live-serve` in the background: a stdlib server on http://localhost:8765

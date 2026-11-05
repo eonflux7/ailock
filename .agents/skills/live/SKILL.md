@@ -18,7 +18,7 @@ opened by `ailock live` (it shows your progress and fills in when you render the
    uv run ailock live <hero> -a <allies...> -e <enemies...> [-p <partner> -o <opponents...>] [--min-badge N]
    ```
    On an ambiguous/unknown name it exits with the candidates: fix the name and rerun.
-3. Decide (see "How to decide") and write `data/live/plan.json` with the Write tool:
+3. Decide (see "How to decide") and write `data/live/plan.json`:
    ```json
    {"build": {"tag": "B1", "why": "<one line: why this build vs this roster>"},
     "fixes": [{"add": "<item>", "instead": "<item in the build, optional>", "why": "<tied to an enemy/fact>"},

@@ -163,7 +163,7 @@ def main(argv: list[str] | None = None) -> None:
             sys.exit(str(e))
         live_page.save_facts(facts)
         live_page.write({})  # rosters and popular builds while the agent decides
-        live_page.set_status("deciding", "Claude is building the plan")
+        live_page.set_status("deciding", "Agent is building the plan")
         print(json.dumps(facts, default=str, indent=1) if a.json else live.render_text(facts))
         print(f"\nlive page: {url}")
     elif a.cmd == "live-page":
