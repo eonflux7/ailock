@@ -1,0 +1,12 @@
+[package]
+name = "ailock-demo"
+version = "0.1.0"
+edition = "2021"
+description = "Extract per-player positions and state from Deadlock demos (via haste)"
+
+[dependencies]
+haste = { path = "../vendor/haste", features = ["deadlock", "protobuf-src", "preserve-metadata"] }
+anyhow = "1"
+
+[profile.release]
+debug = false

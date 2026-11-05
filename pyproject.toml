@@ -1,0 +1,31 @@
+[project]
+name = "ailock"
+version = "0.1.0"
+description = "Deadlock match data, versioned game knowledge and analytics"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.13"
+dependencies = [
+    "cramjam>=2.14.0",
+    "duckdb>=2.0.0",
+    "httpx>=0.28.1",
+    "keyvalues3>=0.7",
+    "polars>=2.0.0",
+    "protobuf>=7.36.2",
+    "pyarrow>=26.0.0",
+    "zstandard>=0.25.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.13.5,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "grpcio-tools>=1.84.1",
+    "pytest>=9.1.1",
+]
+
+[project.scripts]
+ailock = "ailock.cli:main"

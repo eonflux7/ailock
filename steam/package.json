@@ -1,0 +1,12 @@
+{
+  "name": "ailock-steam",
+  "private": true,
+  "type": "module",
+  "description": "Talks to Deadlock's game coordinator with your own Steam login: match history and replay salts",
+  "dependencies": {
+    "protobufjs": "^8.8.1",
+    "qrcode-terminal": "^0.12.0",
+    "steam-session": "^1.9.4",
+    "steam-user": "^5.3.0"
+  }
+}

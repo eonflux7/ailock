@@ -1,0 +1,22 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# data and vendored sources (re-creatable)
+data/
+vendor/
+parser/target/
+steam/node_modules/
+.claude/worktrees/
+
+# tool caches and local agent settings
+.pytest_cache/
+.ruff_cache/
+.claude/settings.local.json
